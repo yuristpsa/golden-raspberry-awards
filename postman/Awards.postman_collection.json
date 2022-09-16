@@ -1,0 +1,58 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Awards",
+		"_postman_id": "67748e1c-6f37-c7c5-7b17-094925b9b1b7",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Awards",
+			"request": {
+				"url": "http://localhost:8080/api/csv/awards",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t \"name\": \"Yuri\",\n\t \"lastName\": \"Stapassoli de Sá\",\n\t \"document\": \"055.900.509-10\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Upload CSV file",
+			"request": {
+				"url": "http://localhost:8080/api/csv/upload",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "",
+							"type": "file",
+							"src": "movielist.csv"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
