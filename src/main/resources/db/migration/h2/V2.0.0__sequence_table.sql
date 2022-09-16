@@ -4,3 +4,4 @@ CREATE TABLE public.sequence (
 );
 
 INSERT INTO sequence(sequence_name, next_val) VALUES ('movie', 0);
+INSERT INTO sequence(sequence_name, next_val) VALUES ('producer', 0);
