@@ -38,36 +38,36 @@ public class Producer implements BaseEntity {
         this.movies.add(movie);
     }
 
-    private List<RangeOfAward> getRangeOfAwards() {
-        List<Integer> winnerYears = this.movies.stream()
-                .filter(Movie::isWinner)
-                .map(Movie::getReleaseYear)
-                .sorted()
-                .toList();
+    public List<RangeOfAward> getRangeOfAwards() {
+        List<Integer> winnerYears = getWinnerYears();
 
+        RangeOfAward rangeOfAward = null;
         List<RangeOfAward> rangeOfAwards = new ArrayList<>();
-        RangeOfAward currentRangeOfAward = null;
 
         for (int year : winnerYears) {
 
-            if (Objects.isNull(currentRangeOfAward)) {
-                currentRangeOfAward = RangeOfAward.builder().previousWin(year).build();
+            if (Objects.isNull(rangeOfAward)) {
+                rangeOfAward = RangeOfAward.builder().previousWin(year).build();
             } else {
-                currentRangeOfAward.setFollowingWin(year);
-                rangeOfAwards.add(currentRangeOfAward);
-                currentRangeOfAward = null;
+                rangeOfAward.setFollowingWin(year);
+                rangeOfAwards.add(rangeOfAward);
+
+                rangeOfAward = RangeOfAward
+                        .builder()
+                        .previousWin(year)
+                        .build();
             }
         }
 
         return rangeOfAwards;
     }
 
-    public Optional<RangeOfAward> getMinRangeOfAwards() {
-        return this.getRangeOfAwards().stream().min(Comparator.comparingInt(RangeOfAward::getInterval));
-    }
-
-    public Optional<RangeOfAward> getMaxRangeOfAwards() {
-        return this.getRangeOfAwards().stream().max(Comparator.comparingInt(RangeOfAward::getInterval));
+    private List<Integer> getWinnerYears() {
+        return this.movies.stream()
+                .filter(Movie::isWinner)
+                .map(Movie::getReleaseYear)
+                .sorted()
+                .toList();
     }
 
     public int getMinIntervalBetweenAwards() {

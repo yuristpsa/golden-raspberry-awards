@@ -76,12 +76,18 @@ class CSVControllerTest {
                 assertEquals(1991, producerMinimumInterval.getFollowingWin());
                 assertEquals(1, producerMinimumInterval.getInterval());
 
-                assertEquals(1, rangeOfAwardsDto.getMax().size());
-                ProducerDto producerMaximumInterval = rangeOfAwardsDto.getMax().get(0);
-                assertEquals("Matthew Vaughn", producerMaximumInterval.getProducer());
-                assertEquals(2002, producerMaximumInterval.getPreviousWin());
-                assertEquals(2015, producerMaximumInterval.getFollowingWin());
-                assertEquals(13, producerMaximumInterval.getInterval());
+                assertEquals(2, rangeOfAwardsDto.getMax().size());
+                ProducerDto producerMaximumInterval01 = rangeOfAwardsDto.getMax().get(0);
+                assertEquals("Matthew Vaughn", producerMaximumInterval01.getProducer());
+                assertEquals(2002, producerMaximumInterval01.getPreviousWin());
+                assertEquals(2015, producerMaximumInterval01.getFollowingWin());
+                assertEquals(13, producerMaximumInterval01.getInterval());
+
+                ProducerDto producerMaximumInterval02 = rangeOfAwardsDto.getMax().get(1);
+                assertEquals("Matthew Vaughn", producerMaximumInterval02.getProducer());
+                assertEquals(2015, producerMaximumInterval02.getPreviousWin());
+                assertEquals(2028, producerMaximumInterval02.getFollowingWin());
+                assertEquals(13, producerMaximumInterval02.getInterval());
             }
         }
     }

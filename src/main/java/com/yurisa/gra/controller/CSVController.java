@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,13 +33,13 @@ public class CSVController {
 
     @GetMapping("/awards")
     public RangeOfAwardsDto getRangeOfMaximumAndMinimumAwards() {
-        List<ProducerDto> producersMinimumRange = producerService.getProducersWithMinimumIntervalBetweenAwards()
-                .stream()
-                .map(producerMapper::entityToProducerMinRangeDto).toList();
+        List<ProducerDto> producersMinimumRange = new ArrayList<>();
+        producerService.getProducersWithMinimumIntervalBetweenAwards()
+                .forEach(f -> producersMinimumRange.addAll(producerMapper.entityToProducersMinRangeDto(f)));
 
-        List<ProducerDto> producersMaximumRange = producerService.getProducersWithMaximumIntervalBetweenAwards()
-                .stream()
-                .map(producerMapper::entityToProducerMaxRangeDto).toList();
+        List<ProducerDto> producersMaximumRange = new ArrayList<>();
+        producerService.getProducersWithMaximumIntervalBetweenAwards()
+                .forEach(f -> producersMaximumRange.addAll(producerMapper.entityToProducersMaxRangeDto(f)));
 
         return RangeOfAwardsDto
                 .builder()

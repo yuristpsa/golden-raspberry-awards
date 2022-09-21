@@ -36,35 +36,33 @@ public class ProducerMapper {
         return nameWithoutSpacesInTheBegginingAndEnd;
     }
 
-    public ProducerDto entityToProducerMinRangeDto(Producer producer) {
-        ProducerDto producerDto = ProducerDto
-                .builder()
-                .producer(producer.getName())
-                .build();
-
-        Optional<RangeOfAward> minRangeOfAward = producer.getMinRangeOfAwards();
-        if (minRangeOfAward.isPresent()) {
-            producerDto.setPreviousWin(minRangeOfAward.get().getPreviousWin());
-            producerDto.setFollowingWin(minRangeOfAward.get().getFollowingWin());
-            producerDto.setInterval(minRangeOfAward.get().getInterval());
-        }
-
-        return producerDto;
+    public List<ProducerDto> entityToProducersMinRangeDto(Producer producer) {
+        return producer
+                .getRangeOfAwards()
+                .stream()
+                .filter(f -> Objects.equals(f.getInterval(), producer.getMinIntervalBetweenAwards()))
+                .map(range -> ProducerDto
+                        .builder()
+                        .producer(producer.getName())
+                        .previousWin(range.getPreviousWin())
+                        .followingWin(range.getFollowingWin())
+                        .interval(range.getInterval())
+                        .build())
+                .toList();
     }
 
-    public ProducerDto entityToProducerMaxRangeDto(Producer producer) {
-        ProducerDto producerDto = ProducerDto
-                .builder()
-                .producer(producer.getName())
-                .build();
-
-        Optional<RangeOfAward> maxRangeOfAward = producer.getMaxRangeOfAwards();
-        if (maxRangeOfAward.isPresent()) {
-            producerDto.setPreviousWin(maxRangeOfAward.get().getPreviousWin());
-            producerDto.setFollowingWin(maxRangeOfAward.get().getFollowingWin());
-            producerDto.setInterval(maxRangeOfAward.get().getInterval());
-        }
-
-        return producerDto;
+    public List<ProducerDto> entityToProducersMaxRangeDto(Producer producer) {
+        return producer
+                .getRangeOfAwards()
+                .stream()
+                .filter(f -> Objects.equals(f.getInterval(), producer.getMaxIntervalBetweenAwards()))
+                .map(range -> ProducerDto
+                        .builder()
+                        .producer(producer.getName())
+                        .previousWin(range.getPreviousWin())
+                        .followingWin(range.getFollowingWin())
+                        .interval(range.getInterval())
+                        .build())
+                .toList();
     }
 }
